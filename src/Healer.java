@@ -1,8 +1,8 @@
-//a knight character.
-//Skill bonuses
-    //+3 str
-    //+2 char
-public class Knight implements userClass {
+//creates a healer character
+    //+3Wis
+    //+2 Char
+public class Healer implements userClass
+{
     //dice for character creation and attacks
     private Dice d20 = new Dice(20);
     private Dice d12 = new Dice(12);
@@ -15,16 +15,16 @@ public class Knight implements userClass {
     private int str, wis, in, cha, dex, con;
     private int hp, temphp;
     private int level = 1;
-    private int AC = 16;
+    private int AC = 12;
 
     //blank constructor wiht just defaults
-    public Knight() {
-        name = "Sam Smorkle";
-        race = "Goblin";
+    public Healer() {
+        name = "Morn Evenwood";
+        race = "Halfling";
         setUp();
     }//end of defalt constructor
 
-    public Knight(String name, String race, int level) {
+    public Healer(String name, String race, int level) {
         this.name = name;
         this.race = race;
         this.level = level;
@@ -76,29 +76,26 @@ public class Knight implements userClass {
     {
         return level;
     }//end level getter
+    //levels up the user
     public void levelUp(int level)
     {
         this.level += level;
-        str = str + (3 + level);
+        str = str - level;
+        wis = wis + (3 + level);
         cha = cha + (2 + level);
         con += level;
     }//end of level up method
-    public void heal()
-    {
-        int heal = d4.roll(level);
-        temphp += heal;
-    }//end heal
     //rolls for stats and hp
     private void setUp()
     {
-        str = d6.roll(3) + (3 + level);
-        wis = d6.roll(3);
+        str = d6.roll(3) - level;
+        wis = d6.roll(3)+ (3 + level);
         in = d6.roll(3);
         cha = d6.roll(3) + (2 + level);
         dex = d6.roll(3);
         con = d6.roll(3) + level;
 
-        hp = d12.roll(level) + (con / 10 + con % 10);
+        hp = d8.roll(level) + (con / 10 + con % 10);
         temphp = hp;
     }
     // controls if the character will receive damage
@@ -112,7 +109,14 @@ public class Knight implements userClass {
             temphp = temphp - damage;
         }
     }//end of takeHit
-    //rolls for hitting the enemy with FISTS or by SWORD
+    //heals the player
+    public void heal()
+    {
+        int heal = d6.roll(level);
+        temphp += heal;
+    }//end heal
+    //rolls for hitting the enemy with FISTS or by
+    //SUMMONING a great big POWERFUL bunny.
     public int rollToHit(String weapon)
     {
         int toHit = d20.roll(1) + howMuchHit(weapon);
@@ -120,37 +124,33 @@ public class Knight implements userClass {
     }
     public int rollDamage(String weapon)
     {
-       int damage = howMuchDamage(weapon);
-       return damage;
+        int damage = howMuchDamage(weapon);
+        return damage;
     }
     //decides how much extra help the user gets based on their weapon
     private int howMuchHit(String weapon)
     {
         int mod = 0;
-        if(weapon.equals("stab"))
-        {
-            mod = (str / 10 + str % 10) + 3;
-        }
-        else if(weapon.equals("fist"))
+        if(weapon.equals("fist"))
         {
             mod = (str / 10 + str % 10);
-        }
-        else
+        }//fist if
+        else if(weapon.equals("summon"))
         {
-            mod = 0;
+            mod = (wis/10 + wis%10);
         }
         return mod;
     }
     private int howMuchDamage(String weapon)
     {
         int damage = 0;
-        if(weapon.equals("stab"))
+        if(weapon.equals("fist"))
         {
-            damage = d8.roll(3);
-        }
-        else if(weapon.equals("fist"))
+            damage = d4.roll(1);
+        }//fist if
+        else if(weapon.equals("summon"))
         {
-            damage = d8.roll(1);
+            damage = d8.roll(2) + wis%10;
         }
         return damage;
     }
@@ -160,7 +160,7 @@ public class Knight implements userClass {
         String output = "\tCharacter Sheet";
         output +=          "\nName:" + name;
         output +=          "\nRace:" + race;
-        output +=          "\nClass: Knight";
+        output +=          "\nClass: Healer";
         output +=          "\nlevel:" + level;
         output +=          "\n\tStr:" + str;
         output +=          "\tWis:" + wis;
