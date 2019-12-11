@@ -23,16 +23,22 @@ public class GameDriver
                 Knight userk = new Knight(username, userRace, 1);
                 System.out.println(userk);
                 sameStuff1("knight", username);
+                userk.levelUp(1);
+                System.out.println(userk);
                 valid = true;
             } else if (userClass.equals("healer")) {
                 Healer userh = new Healer(username, userRace, 1);
                 System.out.println(userh);
                 sameStuff1("healer", username);
+                userh.levelUp(1);
+                System.out.println(userh);
                 valid = true;
             } else if (userClass.equals("wizard")) {
                 Wizard userw = new Wizard(username, userRace, 1);
                 System.out.println(userw);
                 sameStuff1("wizard", username);
+                userw.levelUp(1);
+                System.out.println(userw);
                 valid = true;
             }
             else
@@ -82,9 +88,8 @@ public class GameDriver
             if(answer.equalsIgnoreCase("talk"))
             {
                 System.out.println("What would you like to say?");
-                String talkResponse = scan.next();
                 System.out.println("Yeah. Whatever that was, it's stupid. The dragon roars.");
-                System.out.println("\"Hello, " + name + "Lovely to see you again,\" says the dragon");
+                System.out.println("\"Hello, traveler, lovely to see you again,\" says the dragon");
                 System.out.println("\"Do you have what I want? (yes/no)");
                 answer = scan.next();
                 while(!valid)
@@ -117,7 +122,9 @@ public class GameDriver
                     } else if (answer.equalsIgnoreCase("no"))
                     {
                         System.out.println("\"At least you're honest. I'll give you a little longer to find that jewel for me... " +
-                                        "But if i find you lying to me about it... you better be prepared.\"");
+                                        "\nBut if i find you lying to me about it... you better be prepared. \nGo East. Toward the town. There, perhaps, you'll find it.\"");
+                        System.out.println("Listening to dragons sounds quite good right now, and there's something about those eyes that just makes you want to obey."
+                        + "You go East.");
                         valid = true;
                     }
                     else
@@ -126,12 +133,86 @@ public class GameDriver
                         answer = scan.next();
                     }
                 }//end while loop valid tester for yes/no to dragon
-            }//end of talk if statement
-            else if(answer.equalsIgnoreCase("no"))
+            }//end of talk if statement and start fight statement
+            else if(answer.equalsIgnoreCase("fight"))
             {
-                
+                System.out.println("Thats. That's kinda dumb. You're like, level one," + name);
+                System.out.println("You throw your fists at the lizard. It breathes fire and you are burt to a nice, tasty crisp.");
+                System.out.println("Hope you weren't attached to that character");
+                System.out.println("Would you like to play again?");
+                answer = scan.next();
+                //start while
+                while(!valid)
+                {
+                    //validates if the user would like to look around the desert
+                    if (answer.equalsIgnoreCase("yes")) {
+                        System.out.println("Make a new character.");
+                        setUp();
+                        valid = true;
+                    } else if (answer.equalsIgnoreCase("no")) {
+                        System.out.println("Okay.... goodbye I guess...");
+                        valid = true;
+                        return;
+                    }
+                    else
+                    {
+                        System.out.println("Yes...or no... not whatever the heck that is... Try again");
+                        answer = scan.next();
+                    }
+                }//end while loop valid tester for death response
+                valid = true;
+            }//end of fight
+            else if(answer.equalsIgnoreCase("run"))
+            {
+                System.out.println("That's a pretty smart decision.");
+                System.out.println("I assume you run the opposite direction of the dragon? That would be East.");
+                valid = true;
+            }//run if end
+            else
+            {
+                System.out.println("I understand you're a little spelling challenged. Try again deer.");
+                answer = scan.next();
+                valid = false;
             }
-
         }//validates user's reaction to seeing the dragon
+        System.out.println();
+        System.out.println("Before you is teh Great Desert of Tourbor. It's dry, annoying, and filled with minions."
+        + "\n Minions of the Great Gold Dragon Toubour of course.");
+        System.out.println("He's an odd dragon, that one you just met. You can't seem to remember where you've met him before. ");
+        System.out.println("He obviously thinks he's met you... Though he didn't use your name, did he, " + name + "?");
+        System.out.println("Across this desert is the sea town of Levilis. A dragon such as Tourbor will not cross the city limits.");
+        System.out.println("If you can get there, you will be safe from him. But his minions lie riddled throughout the desert.");
+        System.out.println("Well, at least you passed your first encounter. Level up ;}");
+        System.out.println();
     }//end of sameStuff1 -- the beginning is the same for all classes.
+    //things that are the same for the start of the player being at level 2
+    public static void sameStuff2(String userClass, String name)
+    {
+        Scanner scan = new Scanner(System.in);
+        System.out.println();
+        System.out.println("To your left is a little girl sitting on top of a rock. Straight ahead is the road to Levilis. To your right is a rough canyon wall.");
+        System.out.println("Where would you like to go? (left/front/right");
+        String answer = scan.next();
+        boolean valid = false;
+        while(!valid)
+        {
+            if(answer.equalsIgnoreCase("left"))
+            {
+                System.out.println("The girl looks up at you and sniffles.");
+                System.out.println("\"I was.. looking for my jewel. Do you have it?\"(yes/no)");
+                answer = scan.next();
+                if(answer.equalsIgnoreCase("yes"))
+                {
+                    System.out.println("\"Where? Can I see it?... Oh.. you don't actually have it do you\"");
+                    System.out.println("A large deer appears behind her, misty and indistinct. It lunges for you.");
+
+                }
+                else if(answer.equalsIgnoreCase("no"))
+                {
+                    System.out.println("\"Oh... okay....\" Suddenly a  ");
+                }
+                valid = true;
+            }
+        }
+    }//end same stuff2
 }//end game driver
