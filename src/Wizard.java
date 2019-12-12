@@ -83,6 +83,8 @@ public class Wizard implements userClass
         in = in + (3 + level);
         wis = wis + (2 + level);
         con += level;
+        hp += d12.roll(level);
+        temphp = hp;
     }//end of level up method
     public void heal()
     {
@@ -110,7 +112,12 @@ public class Wizard implements userClass
     {
         if(AC <= toHit && temphp != 0)
         {
+            System.out.println("Hit!");
             temphp = temphp - damage;
+        }
+        else
+        {
+            System.out.println("Miss!");
         }
     }//end of takeHit
     //rolls for hitting the enemy with FISTS

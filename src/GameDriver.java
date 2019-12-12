@@ -10,6 +10,8 @@ public class GameDriver
     }//end main method
     public static void setUp()
     {
+        //enemies
+        Healer enemy1 = new Healer("Lil Miss", "gnome", 1);
         Scanner keyboard = new Scanner(System.in);
         System.out.println("What is your name?");
         String username = keyboard.next();
@@ -25,6 +27,45 @@ public class GameDriver
                 sameStuff1("knight", username);
                 userk.levelUp(1);
                 System.out.println(userk);
+                valid = true;
+                sameStuff2("knight", username);
+                boolean fight = true;
+                while(fight)
+                {
+                    if(userk.getHP() < 0)
+                    {
+                       death();
+                    }//end if death
+                     else if(enemy1.getHP() < 0)
+                    {
+                        fight = false;
+                        System.out.println("You defeated that scary deer! The girl is no where to be seen. Level up!");
+                        userk.levelUp(1);
+                    }
+                    else
+                    {
+                        System.out.println("Would you like to stab it or hit it?");
+                        String answer = keyboard.next();
+                        valid = false;
+                        while(!valid)
+                        {
+                            if(answer.equalsIgnoreCase("stab") || answer.equalsIgnoreCase("hit"))
+                            {
+                                enemy1.takeHit(userk.rollToHit(answer), enemy1.rollDamage(answer));
+                                System.out.println("Enemy now has " + enemy1.getHP() + " HP");
+                                valid = true;
+                            }
+                            else
+                            {
+                                System.out.println("Only two options bro.");
+                                answer = keyboard.next();
+                            }
+                        }
+                        userk.takeHit(enemy1.rollToHit("summon"), enemy1.rollDamage("summon"));
+                        System.out.println("You have: " + userk.getHP() + "HP");
+
+                    }
+                }
                 valid = true;
             } else if (userClass.equals("healer")) {
                 Healer userh = new Healer(username, userRace, 1);
@@ -198,21 +239,53 @@ public class GameDriver
         {
             if(answer.equalsIgnoreCase("left"))
             {
-                System.out.println("The girl looks up at you and sniffles.");
-                System.out.println("\"I was.. looking for my jewel. Do you have it?\"(yes/no)");
-                answer = scan.next();
-                if(answer.equalsIgnoreCase("yes"))
-                {
-                    System.out.println("\"Where? Can I see it?... Oh.. you don't actually have it do you\"");
-                    System.out.println("A large deer appears behind her, misty and indistinct. It lunges for you.");
-
-                }
-                else if(answer.equalsIgnoreCase("no"))
-                {
-                    System.out.println("\"Oh... okay....\" Suddenly a  ");
-                }
+                System.out.println("Before you can get to the girl, a large deer leaps out from the bushes");
+                System.out.println("It is misty and indistinct, it charges you.");
                 valid = true;
+            }
+            else if(answer.equalsIgnoreCase("right"))
+            {
+                System.out.println("That's a pretty rough wall. You start trying to climb it when you hear a large bang from behind you.");
+                System.out.println("When you turn around, a blue deer stands before you, misty and indistinct. It charges you.");
+                valid = true;
+            }
+            else if(answer.equalsIgnoreCase("front"))
+            {
+                System.out.println("You trek onward. Good job on following the road. But just as you round a bend, the same girl stands in front of you.");
+                System.out.println("She grins at you, then waves her hand. A mystical deer appears and charges toward you.");
+                valid = true;
+            }
+            else
+            {
+                System.out.println("Try again. LEFT, RIGHT or FRONT");
+                answer = scan.next();
             }
         }
     }//end same stuff2
+    public static void death()
+    {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("You're kinda dead.... Want to try again?");
+        String answer = keyboard.next();
+        boolean valid = false;
+        while(!valid)
+        {
+            if(answer.equalsIgnoreCase("yes"))
+            {
+                valid = true;
+                setUp();
+            }
+            else if(answer.equalsIgnoreCase("no"))
+            {
+                valid = true;
+                System.out.println("Bye!");
+                return;
+            }
+            else
+            {
+                System.out.println("Try again. Invalid.");
+                answer = keyboard.next();
+            }
+        }
+    }//end death
 }//end game driver

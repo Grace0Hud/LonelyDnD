@@ -84,6 +84,8 @@ public class Healer implements userClass
         wis = wis + (3 + level);
         cha = cha + (2 + level);
         con += level;
+        hp += d12.roll(level);
+        temphp = hp;
     }//end of level up method
     //rolls for stats and hp
     private void setUp()
@@ -106,7 +108,12 @@ public class Healer implements userClass
     {
         if(AC <= toHit && temphp != 0)
         {
+            System.out.println("Hit!");
             temphp = temphp - damage;
+        }
+        else
+        {
+            System.out.println("Miss!");
         }
     }//end of takeHit
     //heals the player
@@ -150,7 +157,7 @@ public class Healer implements userClass
         }//fist if
         else if(weapon.equals("summon"))
         {
-            damage = d8.roll(2) + wis%10;
+            damage = d6.roll(2) + wis%10;
         }
         return damage;
     }
