@@ -2,7 +2,7 @@
 //+2 wis
 //+3 int
 // -1 con
-public class Wizard implements userClass
+public class Wizard implements userClasses
 {
     //dice for character creation and attacks
     private Dice d20 = new Dice(20);
@@ -26,7 +26,7 @@ public class Wizard implements userClass
     }//end of defalt constructor
 
     public Wizard(String name, String race, int level) {
-        this.name = name;
+        this.name = checkName(name);
         this.race = race;
         this.level = level;
         setUp();
@@ -77,6 +77,15 @@ public class Wizard implements userClass
     {
         return level;
     }//end level getter
+    //setters
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+    public void setRace(String race)
+    {
+        this.race = race;
+    }
     public void levelUp(int level)
     {
         this.level += level;
@@ -135,7 +144,7 @@ public class Wizard implements userClass
     private int howMuchHit(String weapon)
     {
         int mod = 0;
-        if(weapon.equals("woosh"))
+        if(weapon.equals("whoosh"))
         {
             mod = (wis / 10 + wis % 10) + 3;
         }
@@ -149,12 +158,26 @@ public class Wizard implements userClass
         }
         return mod;
     }
+    //checks name length
+    private String checkName(String name)
+    {
+        String tempName = name;
+        if(tempName.length() > 30)
+        {
+            name = tempName.substring(0, 30);
+        }
+        else if(tempName.length() < 1)
+        {
+            name = "Sam Smorkle";
+        }
+        return name;
+    }
     //rolls for the damage the attack deals, the powerful magic attack also deals
     //a die of damage to the user
     private int howMuchDamage(String weapon)
     {
         int damage = 0;
-        if(weapon.equals("woosh"))
+        if(weapon.equals("whoosh"))
         {
             damage = d12.roll(3);
             temphp -= damage/3;
