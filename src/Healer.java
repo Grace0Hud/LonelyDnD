@@ -1,7 +1,7 @@
 //creates a healer character
-    //+3Wis
-    //+2 Char
-public class Healer implements userClass
+//+3Wis
+//+2 Char
+public class Healer implements userClasses
 {
     //dice for character creation and attacks
     private Dice d20 = new Dice(20);
@@ -25,7 +25,7 @@ public class Healer implements userClass
     }//end of defalt constructor
 
     public Healer(String name, String race, int level) {
-        this.name = name;
+        this.name = checkName(name);
         this.race = race;
         this.level = level;
         setUp();
@@ -76,6 +76,16 @@ public class Healer implements userClass
     {
         return level;
     }//end level getter
+    //setters
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+    public void setRace(String race)
+    {
+        this.race = race;
+    }
+
     //levels up the user
     public void levelUp(int level)
     {
@@ -100,6 +110,21 @@ public class Healer implements userClass
         hp = d8.roll(level) + (con / 10 + con % 10);
         temphp = hp;
     }
+    //checks name for length
+    private String checkName(String name)
+    {
+        String tempName = name;
+        if(tempName.length() > 30)
+        {
+           name = tempName.substring(0, 30);
+        }
+        else if(tempName.length() < 1)
+        {
+            name = "Sam Smorkle";
+        }
+        return name;
+    }
+
     // controls if the character will receive damage
     //toHit is rolled by the enemy using their attack stat
     //if it is less than the AC of the character, it does not hit.
@@ -119,7 +144,7 @@ public class Healer implements userClass
     //heals the player
     public void heal()
     {
-        int heal = d6.roll(level);
+        int heal = d8.roll(level);
         temphp += heal;
     }//end heal
     //rolls for hitting the enemy with FISTS or by
