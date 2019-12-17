@@ -172,6 +172,24 @@ public class Wizard implements userClasses
         }
         return name;
     }
+    //returns the healer with the lesser level
+    //and reveals that character sheet to the user
+    public static Wizard compareWizard(Wizard user, Wizard second)
+    {
+        if(user.getLevel() > second.getLevel())
+        {
+            return second;
+        }
+        else if(second.getLevel() > user.getLevel())
+        {
+            return user;
+        }
+        else
+        {
+            return second;
+        }
+
+    }
     //rolls for the damage the attack deals, the powerful magic attack also deals
     //a die of damage to the user
     private int howMuchDamage(String weapon)
@@ -179,8 +197,8 @@ public class Wizard implements userClasses
         int damage = 0;
         if(weapon.equals("whoosh"))
         {
-            damage = d12.roll(3);
-            temphp -= damage/3;
+            damage = d8.roll(3);
+            temphp -= damage/5;
         }
         else if(weapon.equals("fist"))
         {
