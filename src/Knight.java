@@ -143,6 +143,23 @@ public class Knight implements userClasses
             System.out.println("Miss!");
         }
     }//end of takeHit
+    public static Knight compareKnight(Knight user, Knight second)
+    {
+        if(user.getLevel() > second.getLevel())
+        {
+            return user;
+        }
+        else if(second.getLevel() > user.getLevel())
+        {
+            return second;
+        }
+        else
+        {
+            return user;
+        }
+
+    }
+
     //rolls for hitting the enemy with FISTS or by SWORD
     public int rollToHit(String weapon)
     {
