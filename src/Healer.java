@@ -147,6 +147,24 @@ public class Healer implements userClasses
         int heal = d8.roll(level);
         temphp += heal;
     }//end heal
+    //returns the healer with the lesser level
+    //and reveals that character sheet to the user
+    public static Healer compareHealer(Healer user, Healer second)
+    {
+        if(user.getLevel() > second.getLevel())
+        {
+            return second;
+        }
+        else if(second.getLevel() > user.getLevel())
+        {
+            return user;
+        }
+        else
+        {
+            return second;
+        }
+
+    }
     //rolls for hitting the enemy with FISTS or by
     //SUMMONING a great big POWERFUL bunny.
     public int rollToHit(String weapon)
