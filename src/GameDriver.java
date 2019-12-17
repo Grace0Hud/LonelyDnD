@@ -224,7 +224,7 @@ public class GameDriver
                         {
                             System.out.println("Would you like to summon, heal or fist it?");
                             String attack = keyboard.next();
-                            System.out.println("Would you like to attack the woman(Vienna) or the elf(Isaac)");
+                            System.out.println("Would you like to attack the woman(Vienna) or the elf(Isaac), hit n for heal");
                             String answer = keyboard.next();
                             valid = false;
                             while(!valid)
@@ -233,6 +233,7 @@ public class GameDriver
                                 {
                                     userh.heal();
                                     System.out.println("You have healed to " + userh.getHP() + " HP");
+                                    valid = true;
                                 }
                                 else if(attack.equalsIgnoreCase("summon") || attack.equalsIgnoreCase("fist"))
                                 {

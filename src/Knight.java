@@ -2,7 +2,7 @@
 //Skill bonuses
 //+3 str
 //+2 char
-public class Knight implements userClasses
+public class Knight implements userClass
 {
     //dice for character creation and attacks
     private Dice d20 = new Dice(20);

@@ -2,7 +2,7 @@
 //+2 wis
 //+3 int
 // -1 con
-public class Wizard implements userClasses
+public class Wizard implements userClass
 {
     //dice for character creation and attacks
     private Dice d20 = new Dice(20);

@@ -1,7 +1,7 @@
 //creates a healer character
 //+3Wis
 //+2 Char
-public class Healer implements userClasses
+public class Healer implements userClass
 {
     //dice for character creation and attacks
     private Dice d20 = new Dice(20);
