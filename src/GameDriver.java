@@ -26,22 +26,6 @@ public class GameDriver
             if (userClass.equals("knight")) {
                 Knight userk = new Knight(username, userRace, 1);
                 System.out.println(userk);
-                System.out.println("Is this ok? Press 'r' to change race, 'n' to change name, type something random not to change anything");
-               String change =  keyboard.next();
-                while(!valid)
-                {
-                    if(change.equalsIgnoreCase("n") || change.equalsIgnoreCase("r"))
-                    {
-                        System.out.println("What would you like to change it to?");
-                        String actualChange = keyboard.next();
-                        System.out.println(changeKnight(userk, change, actualChange));
-                        valid = true;
-                    }
-                    else
-                    {
-                        valid = false;
-                    }
-                }
                 sameStuff1("knight", username, keyboard);
                 userk.levelUp(1);
                 System.out.println(userk);
@@ -155,7 +139,7 @@ public class GameDriver
                             System.out.println("Isaac lunges to smack you. That's just how he is.");
                             userk.takeHit(enemy3.rollToHit("fist"), enemy3.rollDamage("fist"));
                         }
-                        else if(enemy2.getHP() > 0)
+                        if(enemy2.getHP() > 0)
                         {
                             System.out.println("Vienna calls down a lightning bolt... hope it doesn't hit ya...");
                             userk.takeHit(enemy2.rollToHit("whoosh"), enemy2.rollDamage("whoosh"));
@@ -165,74 +149,59 @@ public class GameDriver
                 }//end second level fight
                 valid = true;
             }//end knight
-            else if (userClass.equals("healer")) {
+            else if (userClass.equals("healer"))
+            {
                 Healer userh = new Healer(username, userRace, 1);
                 System.out.println(userh);
-                System.out.println("Is this ok? Press 'r' to change race, 'n' to change name, type something random not to change anything");
-                String change =  keyboard.next();
-                while(!valid)
-                {
-                    if(change.equalsIgnoreCase("n") || change.equalsIgnoreCase("r"))
-                    {
-                        System.out.println("What would you like to change it to?");
-                        String actualChange = keyboard.next();
-                        System.out.println(changeHealer(userh, change, actualChange));
-                        valid = true;
-                    }
-                    else
-                    {
-                        valid = false;
-                    }
-                }
                 sameStuff1("healer", username, keyboard);
                 userh.levelUp(1);
                 System.out.println(userh);
                 valid = true;
                 sameStuff2("healer", username, keyboard);
                 //start of first level fight against deer
+                System.out.println("This enemy is the same class as you! If you are higher level, the character sheet will be revealed to you, if not. You will be reminded of your own.");
+                System.out.println(Healer.compareHealer(userh, enemy1));
                 boolean fight = true;
-                while(fight) {
-                    if (enemy1.getHP() < 0) {
+                while(fight)
+                {
+                    if (enemy1.getHP() < 1)
+                    {
                         System.out.println("You defeated that scary deer! The girl is no where to be seen. Level up!");
                         userh.levelUp(1);
                         System.out.println(userh);
                         fight = false;
-                    } else if (userh.getHP() < 0) {
+                    } else if (userh.getHP() < 1) {
                         death();
                         fight = false;
                     }//end if death
                     else
                         {
                         System.out.println("Would you like to run, summon your own beast (you will take damage too), fist it, "
-                        + "or heal yourself?");
+                                + "or heal yourself?");
                         String answer = keyboard.next();
                         valid = false;
-                        while (!valid) {
+                        while (!valid)
+                        {
                             if (answer.equalsIgnoreCase("summon") || answer.equalsIgnoreCase("fist")) {
                                 enemy1.takeHit(userh.rollToHit(answer), userh.rollDamage(answer));
                                 System.out.println("Enemy now has " + enemy1.getHP() + " HP");
                                 valid = true;
-                            }
-                            else if(answer.equalsIgnoreCase("heal"))
-                            {
+                            } else if (answer.equalsIgnoreCase("heal")) {
                                 userh.heal();
                                 System.out.println("You now have " + userh.getHP() + "HP");
                                 valid = true;
-                            }
-                            else if(answer.equalsIgnoreCase("run"))
-                            {
+                            } else if (answer.equalsIgnoreCase("run")) {
                                 valid = true;
                                 System.out.println("You live to fight another day, however, you gain no experience.");
                                 fight = false;
-                            }
-                            else
-                                {
+                            } else {
                                 System.out.println("Only two options bro.");
                                 answer = keyboard.next();
                             }
-                        }
+                        }//end fight validation
                         userh.takeHit(enemy1.rollToHit("summon"), enemy1.rollDamage("summon"));
                         System.out.println("You have: " + userh.getHP() + "HP");
+                         }
                     }
                     sameStuff3("healer", username, keyboard);
                     //start of second level fight
@@ -253,14 +222,19 @@ public class GameDriver
                         }//end if death
                         else
                         {
-                            System.out.println("Would you like to stab it or fist it?");
+                            System.out.println("Would you like to summon, heal or fist it?");
                             String attack = keyboard.next();
                             System.out.println("Would you like to attack the woman(Vienna) or the elf(Isaac)");
                             String answer = keyboard.next();
                             valid = false;
                             while(!valid)
                             {
-                                if(attack.equalsIgnoreCase("stab") || attack.equalsIgnoreCase("fist"))
+                                if(attack.equalsIgnoreCase("heal"))
+                                {
+                                    userh.heal();
+                                    System.out.println("You have healed to " + userh.getHP() + " HP");
+                                }
+                                else if(attack.equalsIgnoreCase("summon") || attack.equalsIgnoreCase("fist"))
                                 {
                                     while(!valid)
                                     {
@@ -286,7 +260,7 @@ public class GameDriver
                                 }
                                 else
                                 {
-                                    System.out.println("STAB or FIST");
+                                    System.out.println("SUMMON, HEAL or FIST");
                                     attack = keyboard.next();
                                 }
                             }
@@ -295,7 +269,7 @@ public class GameDriver
                                 System.out.println("Isaac lunges to smack you. That's just how he is.");
                                 userh.takeHit(enemy3.rollToHit("fist"), enemy3.rollDamage("fist"));
                             }
-                            else if(enemy2.getHP() > 0)
+                            if(enemy2.getHP() > 0)
                             {
                                 System.out.println("Vienna calls down a lightning bolt... hope it doesn't hit ya...");
                                 userh.takeHit(enemy2.rollToHit("whoosh"), enemy2.rollDamage("whoosh"));
@@ -303,26 +277,11 @@ public class GameDriver
                             System.out.println("You have: " + userh.getHP() + "HP");
                         }
                     }//end second level fight
-                }//end of healer
-            } else if (userClass.equals("wizard")) {
+            } //end of healer
+            else if (userClass.equals("wizard"))
+            {
                 Wizard userw = new Wizard(username, userRace, 1);
                 System.out.println(userw);
-                System.out.println("Is this ok? Press 'r' to change race, 'n' to change name, type something random not to change anything");
-                String change =  keyboard.next();
-                while(!valid)
-                {
-                    if(change.equalsIgnoreCase("n") || change.equalsIgnoreCase("r"))
-                    {
-                        System.out.println("What would you like to change it to?");
-                        String actualChange = keyboard.next();
-                        System.out.println(changeWizard(userw, change, actualChange));
-                        valid = true;
-                    }
-                    else
-                    {
-                        valid = false;
-                    }
-                }
                 sameStuff1("wizard", username,  keyboard);
                 userw.levelUp(1);
                 System.out.println(userw);
@@ -344,7 +303,8 @@ public class GameDriver
                         System.out.println("Would you like to run, whoosh it (magic attack) or fist it?");
                         String answer = keyboard.next();
                         valid = false;
-                        while (!valid) {
+                        while (!valid)
+                        {
                             if (answer.equalsIgnoreCase("whoosh") || answer.equalsIgnoreCase("fist")) {
                                 enemy1.takeHit(userw.rollToHit(answer), userw.rollDamage(answer));
                                 System.out.println("Enemy now has " + enemy1.getHP() + " HP");
@@ -368,6 +328,9 @@ public class GameDriver
                 }//end first combat //
                 sameStuff3("wizard", username, keyboard);
                 //start of second level fight
+                System.out.println("These two are the same class as you! Their character sheets may be revealed if they are lower level. ");
+                System.out.println(Wizard.compareWizard(userw, enemy2));
+                System.out.println(Wizard.compareWizard(userw,enemy3));
                 fight = true;
                 while(fight)
                 {
@@ -385,14 +348,14 @@ public class GameDriver
                     }//end if death
                     else
                     {
-                        System.out.println("Would you like to stab it or fist it?");
+                        System.out.println("Would you like to whoosh it or fist it?");
                         String attack = keyboard.next();
                         System.out.println("Would you like to attack the woman(Vienna) or the elf(Isaac)");
                         String answer = keyboard.next();
                         valid = false;
                         while(!valid)
                         {
-                            if(attack.equalsIgnoreCase("stab") || attack.equalsIgnoreCase("fist"))
+                            if(attack.equalsIgnoreCase("whoosh") || attack.equalsIgnoreCase("fist"))
                             {
                                 while(!valid)
                                 {
@@ -418,7 +381,7 @@ public class GameDriver
                             }
                             else
                             {
-                                System.out.println("STAB or FIST");
+                                System.out.println("WHOOSH or FIST");
                                 attack = keyboard.next();
                             }
                         }
@@ -427,7 +390,7 @@ public class GameDriver
                             System.out.println("Isaac lunges to smack you. That's just how he is.");
                             userw.takeHit(enemy3.rollToHit("fist"), enemy3.rollDamage("fist"));
                         }
-                        else if(enemy2.getHP() > 0)
+                        if(enemy2.getHP() > 0)
                         {
                             System.out.println("Vienna calls down a lightning bolt... hope it doesn't hit ya...");
                             userw.takeHit(enemy2.rollToHit("whoosh"), enemy2.rollDamage("whoosh"));
@@ -615,6 +578,7 @@ public class GameDriver
                     else
                     {
                         System.out.println("You may admire a few cacti, but eventually it is time to move on and return to the path.");
+                        valid = true;
                     }
                 }
                 valid = true;
@@ -717,40 +681,4 @@ public class GameDriver
             }
         }
     }//end death
-    public static Knight changeKnight(Knight user, String change, String newChange)
-    {
-        if(change == "r")
-        {
-            user.setRace(newChange);
-        }
-        else if(change == "n")
-        {
-            user.setName(newChange);
-        }
-        return user;
-    }
-    public static Wizard changeWizard(Wizard user, String change, String newChange)
-    {
-        if(change == "r")
-        {
-            user.setRace(newChange);
-        }
-        else if(change == "n")
-        {
-            user.setName(newChange);
-        }
-        return user;
-    }
-    public static Healer changeHealer(Healer user, String change, String newChange)
-    {
-        if(change == "r")
-        {
-            user.setRace(newChange);
-        }
-        else if(change == "n")
-        {
-            user.setName(newChange);
-        }
-        return user;
-    }
 }//end game driver
